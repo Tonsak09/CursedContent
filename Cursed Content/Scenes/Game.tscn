@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://c317dg2q6emlp"]
+
+[ext_resource type="ArrayMesh" uid="uid://56u7iwrq4igx" path="res://Models/Ico.obj" id="1_537b1"]
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="2_ay2nj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dy8xh"]
+
+[sub_resource type="Environment" id="Environment_8mbi5"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_flcd0"]
+
+[node name="SceneRoot" type="Node3D"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_dy8xh")
+mesh = ExtResource("1_537b1")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8mbi5")
+camera_attributes = SubResource("CameraAttributesPractical_flcd0")
+
+[node name="Player" type="Node3D" parent="."]
+script = ExtResource("2_ay2nj")
+lookSpeed = -0.2
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.94341, 0.107904, 0.313584, -0.29593, 0.700702, 0.649185, -0.149679, -0.705247, 0.692981, 0, 0, 0)
