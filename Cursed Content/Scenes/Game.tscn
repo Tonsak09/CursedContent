@@ -1,30 +1,114 @@
-[gd_scene load_steps=6 format=3 uid="uid://c317dg2q6emlp"]
+[gd_scene load_steps=20 format=3 uid="uid://c317dg2q6emlp"]
 
-[ext_resource type="ArrayMesh" uid="uid://56u7iwrq4igx" path="res://Models/Ico.obj" id="1_537b1"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="2_ay2nj"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dy8xh"]
+[ext_resource type="Shader" uid="uid://dwtagcgxuxjf1" path="res://Shaders/Triplanar.tres" id="2_b6ojf"]
+[ext_resource type="Material" uid="uid://plbqsi75xj1b" path="res://Materials/RoomMat.tres" id="2_js888"]
+[ext_resource type="ArrayMesh" uid="uid://ckxtwqqt362tr" path="res://Models/New Room Export.obj" id="3_fggpf"]
+[ext_resource type="ArrayMesh" uid="uid://c1u1wwg42degf" path="res://Models/Roof.obj" id="3_tdgrp"]
+[ext_resource type="ArrayMesh" uid="uid://c5f448b40v7f2" path="res://Models/Cursed Monster.obj" id="4_82j8j"]
+[ext_resource type="ArrayMesh" uid="uid://8l0eo2nu2ptc" path="res://Models/Toilet Paper.obj" id="6_4mprv"]
+[ext_resource type="Script" path="res://Scenes/Bobbing.gd" id="7_uyuxb"]
+[ext_resource type="Material" uid="uid://xs766rv5qhg3" path="res://Materials/Stairs.tres" id="8_05itf"]
+[ext_resource type="ArrayMesh" uid="uid://c6ljn5kiujr0q" path="res://Models/New Stairs Export.obj" id="9_p2cqk"]
+[ext_resource type="ArrayMesh" uid="uid://b8dopokixudh3" path="res://Models/New Door Export.obj" id="11_i6kvg"]
 
 [sub_resource type="Environment" id="Environment_8mbi5"]
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_flcd0"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hw3be"]
+albedo_color = Color(0.247059, 0.176471, 0.12549, 1)
+metallic_specular = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_80fh1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n6n5r"]
+albedo_color = Color(0.647308, 0.533514, 0.427001, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gujg7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qn4lx"]
+render_priority = 0
+shader = ExtResource("2_b6ojf")
+shader_parameter/Sharpness = null
+
+[sub_resource type="SphereMesh" id="SphereMesh_et8vo"]
+
 [node name="SceneRoot" type="Node3D"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_dy8xh")
-mesh = ExtResource("1_537b1")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8mbi5")
 camera_attributes = SubResource("CameraAttributesPractical_flcd0")
 
 [node name="Player" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.00442, 0)
 script = ExtResource("2_ay2nj")
 lookSpeed = -0.2
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
+fov = 90.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Player"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.00034771, 0.00121546, 0.000548172)
+light_energy = 13.952
+shadow_enabled = true
+spot_range = 103.157
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.94341, 0.107904, 0.313584, -0.29593, 0.700702, 0.649185, -0.149679, -0.705247, 0.692981, 0, 0, 0)
+visible = false
+
+[node name="CursedRoom" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0164803, 3.8147e-07, 0.00764885)
+material_override = ExtResource("2_js888")
+mesh = ExtResource("3_fggpf")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.98932, 0)
+light_energy = 1.269
+shadow_enabled = true
+omni_range = 223.259
+
+[node name="Roof" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000753593, 0.00094738, 0.00240479)
+material_override = ExtResource("2_js888")
+mesh = ExtResource("3_tdgrp")
+
+[node name="CursedMonster" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.482416, -0.206183, -0.0197212, 0.205177, 0.468874, 0.116982, -0.0283294, -0.115201, 0.511421, -3.25845, 1.75831, 1.21123)
+material_override = SubResource("StandardMaterial3D_hw3be")
+mesh = ExtResource("4_82j8j")
+script = ExtResource("7_uyuxb")
+v = 1.0
+s = 2.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(5.14851, 0, 0, 0, -2.14563e-07, 1, 0, -4.90862, -4.37114e-08, 0, 0.465478, 7.54449)
+visible = false
+mesh = SubResource("QuadMesh_80fh1")
+
+[node name="ToiletPaper" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.013, -0.851816, 12.6839)
+material_override = SubResource("StandardMaterial3D_n6n5r")
+mesh = ExtResource("6_4mprv")
+script = ExtResource("7_uyuxb")
+v = 0.5
+s = 1.0
+
+[node name="NewStairsExport" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.240288, 0.0309101, 0.460969)
+material_override = ExtResource("8_05itf")
+mesh = ExtResource("9_p2cqk")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.77626, 0)
+visible = false
+material_override = SubResource("ShaderMaterial_gujg7")
+material_overlay = SubResource("ShaderMaterial_qn4lx")
+mesh = SubResource("SphereMesh_et8vo")
+
+[node name="NewDoorExport" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0931409, -0.0785116, -0.00392785)
+material_override = ExtResource("8_05itf")
+mesh = ExtResource("11_i6kvg")
